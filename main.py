@@ -3,22 +3,15 @@ pip install requests
 import streamlit as st
 import pickle
 from PIL import Image
-import os
-import requests
-import io
+# Relative paths to your files
+model_path = 'pramod.pkl'
+image_path = 'bbb.png'
 
-url = "https://drive.google.com/uc?export=download&id=1aWzWHlbRnnAZAtq9usd7rQkq3yOv3dWb"
-
-response = requests.get(url)
-if response.status_code == 200:
-    content = response.content
-    pickle_in = io.BytesIO(content)
+# Load the pickled model
+with open(model_path, 'rb') as model_file:
+    model = pickle.load(model_file)
 
 
-
-# Load the trained model
-#pickle_in = open(r"https://drive.google.com/file/d/1aWzWHlbRnnAZAtq9usd7rQkq3yOv3dWb/view?usp=drive_link", 'rb')
-model = pickle.load(pickle_in)
 
 
 # define the functions to pass an inputs and make prediction
@@ -45,7 +38,8 @@ def main():
         </div> 
         """
     st.title('Automated Water Quality Prediction System', )
-    image = Image.open(r"https://drive.google.com/file/d/1A1qV1Puzn0mtyDEzZnT-mWf1_XSrcdxz/view?usp=sharing")
+    image = Image.open(image_path)
+    
     st.image(image,"Water Quality sample prediction")
 
 
