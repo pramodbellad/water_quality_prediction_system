@@ -1,7 +1,7 @@
-# This is a program for beautiful interface
 import requests
 import pickle
 from PIL import Image
+import streamlit as st
 from io import BytesIO
 
 # URLs of the pickle and image files
@@ -13,63 +13,45 @@ response = requests.get(pickle_url)
 if response.status_code == 200:
     pickle_content = response.content
 else:
-    print("Error downloading pickle file. Status code:", response.status_code)
+    st.error("Error downloading pickle file. Status code:", response.status_code)
 
 # Download the image file
 response = requests.get(image_url)
 if response.status_code == 200:
     image_content = BytesIO(response.content)
 else:
-    print("Error downloading image file. Status code:", response.status_code)
+    st.error("Error downloading image file. Status code:", response.status_code)
 
 try:
     # Load the pickle content directly
-    model = pickle.load(pickle_content)
-    print("Pickle file loaded successfully.")
+    model = pickle.loads(pickle_content)
+    st.success("Pickle file loaded successfully.")
 except Exception as e:
-    print("Error loading pickle file:", e)
+    st.error("Error loading pickle file:", e)
 
 try:
     # Open the image using PIL
     image = Image.open(image_content)
-    print("Image opened successfully.")
+    st.success("Image opened successfully.")
 except Exception as e:
-    print("Error opening image:", e)
+    st.error("Error opening image:", e)
 
-
-
-
-
-
-
-# define the functions to pass an inputs and make prediction
+# Define the function to make a prediction
 def prediction(aluminium, ammonia, arsenic, barium, cadmium, chloramine, chromium, copper,flouride,bacteria, viruses, lead, nitrates, nitrites, perchlorate, radium,silver, uranium):
-   # aluminium,ammonia, arsenic, barium, cadmium, chloramine, copper, flouride1, bacteria, viruses, lead, nitrates, nitrites, perchlorate, radium,selenium1, silver, uranium
-
-# Making a Prediction with new new water sample
-    prediction = model.predict(
-        [[aluminium, ammonia, arsenic, barium, cadmium, chloramine, chromium, copper,flouride,
-               bacteria, viruses, lead, nitrates, nitrites, perchlorate, radium,silver, uranium]])
+    # Use the model to predict based on the input parameters
+    prediction = model.predict([[aluminium, ammonia, arsenic, barium, cadmium, chloramine, chromium, copper,flouride,
+                                 bacteria, viruses, lead, nitrates, nitrites, perchlorate, radium, silver, uranium]])
     if prediction == 0:
-        pred = 'Safe'
+        result = "Safe"
     else:
-        pred = 'Unsafe'
-    return pred
+        result = "Unsafe"
+    return result
 
-
-# let's create a function to define the web page
+# Define the Streamlit app interface
 def main():
-    # front end elements of the web page
-    html_temp = """ 
-        <div style ="background-color:blue;padding:10px"> 
-        <h1 style ="color:black;text-align:center;">Automated Water Quality Prediction System</h1> 
-        </div> 
-        """
-    st.title('Automated Water Quality Prediction System', )
-    
-    
-    st.image(image,"Water Quality sample prediction")
+    st.title('Automated Water Quality Prediction System')
 
+    st.image(image, "Water Quality sample prediction")
 
     # Enter all the parameters of water
     st.header('Enter the characteristics of the water:')
@@ -80,7 +62,7 @@ def main():
         arsenic = st.number_input('arsenic:', min_value=0.0, max_value=1.05, value=0.5)
         lead = st.number_input('lead:', min_value=0.0, max_value=0.8, value=0.5)
         nitrates = st.number_input('nitrates:', min_value=0.0, max_value=20.0, value=0.5)
-
+    
     with col2:
         barium = st.number_input('barium:', min_value=0.0, max_value=5.0, value=0.5)
         cadmium = st.number_input('cadmium:', min_value=0.0, max_value=0.9, value=0.5)
@@ -95,7 +77,6 @@ def main():
         bacteria = st.number_input('bacteria:', min_value=0.0, max_value=1.0, value=0.5)
         radium = st.number_input('radium:', min_value=0.0, max_value=8.0, value=0.5)
 
-
     with col4:
         silver = st.number_input('silver:', min_value=0.0, max_value=0.5, value=0.5)
         viruses = st.number_input('viruses:', min_value=0.0, max_value=1.0, value=0.5)
@@ -106,8 +87,6 @@ def main():
         result = prediction(aluminium, ammonia, arsenic, barium, cadmium, chloramine, chromium, copper,flouride,
                bacteria, viruses, lead, nitrates, nitrites, perchlorate, radium, silver, uranium)
         st.success("Status of new water sample is: {}".format(result))
-        #st.success("Status of new water sample is: {}".format(result))
-
 
 if __name__=='__main__':
     main()
