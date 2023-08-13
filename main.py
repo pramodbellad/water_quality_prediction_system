@@ -65,7 +65,7 @@ def main():
         <h1 style ="color:black;text-align:center;">Automated Water Quality Prediction System</h1> 
         </div> 
         """
-    st.title('Automated Water Quality Prediction System', )
+    st.title('Automated Water Quality Prediction System' )
     
     
     st.image(image,"Water Quality sample prediction")
