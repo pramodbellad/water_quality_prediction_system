@@ -4,12 +4,20 @@ import streamlit as st
 import pickle
 from PIL import Image
 import os
+import requests
+import io
 
+url = "https://drive.google.com/uc?export=download&id=1aWzWHlbRnnAZAtq9usd7rQkq3yOv3dWb"
+
+response = requests.get(url)
+if response.status_code == 200:
+    content = response.content
+    pickle_in = io.BytesIO(content)
 
 
 
 # Load the trained model
-pickle_in = open(r"https://drive.google.com/file/d/1aWzWHlbRnnAZAtq9usd7rQkq3yOv3dWb/view?usp=drive_link", 'rb')
+#pickle_in = open(r"https://drive.google.com/file/d/1aWzWHlbRnnAZAtq9usd7rQkq3yOv3dWb/view?usp=drive_link", 'rb')
 model = pickle.load(pickle_in)
 
 
