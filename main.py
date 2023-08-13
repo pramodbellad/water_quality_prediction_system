@@ -7,7 +7,7 @@ from PIL import Image
 
 
 # Load the trained model
-pickle_in = open(r"pramod.pkl", 'rb')
+pickle_in = open(r"/..pramod.pkl", 'rb')
 model = pickle.load(pickle_in)
 
 
@@ -35,7 +35,7 @@ def main():
         </div> 
         """
     st.title('Automated Water Quality Prediction System', )
-    image = Image.open(r"bbb.png")
+    image = Image.open(r"/..bbb.png")
     st.image(image,"Water Quality sample prediction")
 
 
