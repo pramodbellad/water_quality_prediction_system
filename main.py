@@ -9,7 +9,7 @@ import os
 
 
 # Load the trained model
-pickle_in = open(r"./pramod.pkl", 'rb')
+pickle_in = open(r"https://drive.google.com/file/d/1aWzWHlbRnnAZAtq9usd7rQkq3yOv3dWb/view?usp=drive_link", 'rb')
 model = pickle.load(pickle_in)
 
 
@@ -37,7 +37,7 @@ def main():
         </div> 
         """
     st.title('Automated Water Quality Prediction System', )
-    image = Image.open(r"./bbb.png")
+    image = Image.open(r"https://drive.google.com/file/d/1A1qV1Puzn0mtyDEzZnT-mWf1_XSrcdxz/view?usp=sharing")
     st.image(image,"Water Quality sample prediction")
 
 
