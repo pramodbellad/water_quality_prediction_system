@@ -3,7 +3,8 @@
 import streamlit as st
 import pickle
 from PIL import Image
-
+import os
+print("Current working directory:", os.getcwd())
 
 
 # Load the trained model
