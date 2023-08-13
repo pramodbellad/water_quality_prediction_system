@@ -1,5 +1,5 @@
 # This is a program for beautiful interface
-
+pip install requests
 import streamlit as st
 import pickle
 from PIL import Image
