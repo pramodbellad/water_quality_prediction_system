@@ -1,15 +1,37 @@
 # This is a program for beautiful interface
 
-import streamlit as st
+import requests
 import pickle
 from PIL import Image
-# Relative paths to your files
-model_path = 'pramod.pkl'
-image_path = 'bbb.png'
+from io import BytesIO
 
-# Load the pickled model
-with open(model_path, 'rb') as model_file:
-    model = pickle.load(model_file)
+# URL of the pickle file
+pickle_url = "https://github.com/pramodbellad/water_quality_prediction_system/raw/master/pramod.pkl"
+
+# URL of the image file
+image_url = "https://github.com/pramodbellad/water_quality_prediction_system/raw/master/bbb.png"
+
+# Download the pickle file
+response = requests.get(pickle_url)
+if response.status_code == 200:
+    pickle_content = BytesIO(response.content)
+else:
+    print("Error downloading pickle file")
+
+# Download the image file
+response = requests.get(image_url)
+if response.status_code == 200:
+    image_content = BytesIO(response.content)
+else:
+    print("Error downloading image file")
+
+# Load the pickle file
+model = pickle.load(pickle_content)
+
+# Open the image using PIL
+image = Image.open(image_content)
+
+# Now you can work with the 'model' and 'image' objects
 
 
 
@@ -38,7 +60,7 @@ def main():
         </div> 
         """
     st.title('Automated Water Quality Prediction System', )
-    image = Image.open(image_path)
+    
     
     st.image(image,"Water Quality sample prediction")
 
