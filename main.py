@@ -1,37 +1,43 @@
 # This is a program for beautiful interface
-
 import requests
 import pickle
 from PIL import Image
 from io import BytesIO
 
-# URL of the pickle file
+# URLs of the pickle and image files
 pickle_url = "https://github.com/pramodbellad/water_quality_prediction_system/raw/master/pramod.pkl"
-
-# URL of the image file
 image_url = "https://github.com/pramodbellad/water_quality_prediction_system/raw/master/bbb.png"
 
 # Download the pickle file
 response = requests.get(pickle_url)
 if response.status_code == 200:
-    pickle_content = BytesIO(response.content)
+    pickle_content = response.content
 else:
-    print("Error downloading pickle file")
+    print("Error downloading pickle file. Status code:", response.status_code)
 
 # Download the image file
 response = requests.get(image_url)
 if response.status_code == 200:
     image_content = BytesIO(response.content)
 else:
-    print("Error downloading image file")
+    print("Error downloading image file. Status code:", response.status_code)
 
-# Load the pickle file
-model = pickle.load(pickle_content)
+try:
+    # Load the pickle content directly
+    model = pickle.load(pickle_content)
+    print("Pickle file loaded successfully.")
+except Exception as e:
+    print("Error loading pickle file:", e)
 
-# Open the image using PIL
-image = Image.open(image_content)
+try:
+    # Open the image using PIL
+    image = Image.open(image_content)
+    print("Image opened successfully.")
+except Exception as e:
+    print("Error opening image:", e)
 
-# Now you can work with the 'model' and 'image' objects
+
+
 
 
 
