@@ -7,7 +7,7 @@ from PIL import Image
 
 
 # Load the trained model
-pickle_in = open(r"C:\Users\Lenovo\PycharmProjects\water_quality_prediction_system\pramod.pkl", 'rb')
+pickle_in = open(r"https://github.com/pramodbellad/water_quality_prediction_system/commit/61e187297d5d0a55d07829a2fe5a5b4c4e07b453#diff-1a088b6acb98658bd636d5ffd5ac792d1e5537fdec99063823912ca43055fb69", 'rb')
 model = pickle.load(pickle_in)
 
 
